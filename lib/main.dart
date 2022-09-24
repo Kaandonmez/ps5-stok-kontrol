@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           //secondary: const Color(0xFFFFFFFF),
         ),
       ),
-      home: MyHomePage(title: 'PS5 Stock Checker'),
+      home: MyHomePage(title: 'PS5 Stok Kontrol'),
     );
   }
 }
