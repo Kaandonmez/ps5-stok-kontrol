@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 String keyValue = "";
 String keyValueStatus = "Hatalı key değeri";
 Color refreshIconColor = Colors.red;
+bool isKeyValid = false;
+bool isTextfieldWR = false;
+bool makeCalculation = false;
 
-DateTime convertedString = DateTime.parse("2022-01-01 00:00:00.000");
+DateTime convertedString = DateTime.parse("2023-01-01 00:00:00.000");
 
 Color stockColor = Colors.orange;
 Color stockColorx = Colors.orange;

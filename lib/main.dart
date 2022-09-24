@@ -7,8 +7,12 @@ import 'package:url_launcher/url_launcher.dart';
 import 'config.dart';
 import 'package:flutter/services.dart';
 import 'package:encrypt/encrypt.dart' as enc;
+import 'denc.dart';
+import 'dart:core';
 
 //hex color code 006FCD
+
+DateTime? testTime;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,36 +21,6 @@ void main() {
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(MyApp()));
   runApp(MyApp());
-}
-
-DateTime sifreCoz(String decrypted1) {
-  // final plainText = decrypted1;
-  // final key = encrypt.Key.fromUtf8('1111111111111111');
-  // final iv = encrypt.IV.fromLength(16);
-
-  // final encrypter =
-  //     encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.ecb));
-
-  // final encrypted = encrypter.encrypt(plainText, iv: iv);
-  // final decrypted = encrypter.decrypt(encrypted, iv: iv);
-
-  // print('çözülen şifre : ' +
-  //     decrypted); // Lorem ipsum dolor sit amet, consectetur adipiscing elit
-
-  final plainText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-  final key = enc.Key.fromUtf8('1111111111111111');
-  final iv = enc.IV.fromLength(16);
-
-  final encrypter = enc.Encrypter(enc.AES(key));
-
-  final encrypted = encrypter.encrypt(plainText, iv: iv);
-  final decrypted = encrypter.decrypt(encrypted, iv: iv);
-
-  print(decrypted); // Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  print(encrypted
-      .base64); // R4PxiU3h8YoIRqVowBXm36ZcCeNeZ4s1OvVBTfFlZRdmohQqOpPQqD1YecJeZMAop/hZ4OxqgC1WtwvX/hP9mw==
-
-  return convertedString;
 }
 
 class MyApp extends StatelessWidget {
@@ -87,6 +61,18 @@ class _MyHomePageState extends State<MyHomePage> {
   String _stockdualsenseVatanSiyah = 'Kontrol Ediliyor';
   String _stockdualsenseMediaMarktKirmizi = 'Kontrol Ediliyor';
   String _stockpsDigitalMediaMarkt = 'Kontrol Ediliyor';
+
+  Future<DateTime> sifreCoz(String decrypted1) async {
+    String a = await decryptMyMessage(decrypted1);
+    DateTime b = DateTime.parse(a);
+    print(b);
+
+    setState(() {
+      testTime = b;
+    });
+    //print(a);
+    return b;
+  }
 
   Future<void> _checkStock() async {
     var url = Uri.parse(vatanCDBundle);
@@ -499,16 +485,17 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               margin: EdgeInsets.all(10),
               child: TextField(
+                readOnly: isTextfieldWR,
                 onChanged: (value) {
                   setState(() {
+                    //get now time
+
                     keyValue = value;
 
-                    if (keyValue == '1234') {
-                      refreshIconColor = Colors.green;
-                      keyValueStatus = 'Key Geçerli!';
-                    } else {
-                      refreshIconColor = Colors.red;
-                      keyValueStatus = 'Hatalı key değeri';
+                    //if keyvalue is exactly 388 characters
+                    if (keyValue.length == 388) {
+                      makeCalculation = true;
+                      sifreCoz(keyValue);
                     }
                   });
                 },
@@ -522,6 +509,33 @@ class _MyHomePageState extends State<MyHomePage> {
                       'Key değeri benzersizdir ve sadece\n geliştirici tarafından verilir.',
                   helperStyle: TextStyle(color: Colors.white),
                 ),
+              ),
+            ),
+
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              ),
+              onPressed: () {
+                setState(() {
+                  var now = DateTime.now();
+                  if (testTime!.isAfter(now) && makeCalculation) {
+                    //disable button
+                    isKeyValid = true;
+                    keyValueStatus = 'Key Geçerli!';
+                    refreshIconColor = Colors.green;
+                    isTextfieldWR = true;
+                  } else {
+                    //enable button
+                    isKeyValid = false;
+                    refreshIconColor = Colors.red;
+                    keyValueStatus = 'Hatalı key değeri';
+                  }
+                });
+              },
+              child: Text(
+                'Key\'i test et',
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],
@@ -541,30 +555,31 @@ class _MyHomePageState extends State<MyHomePage> {
           //launch(url.toString(), forceWebView: false);
 
           setState(() {
-            _stock = 'Kontrol Ediliyor';
-            stockColor = Colors.orange;
-            _stockx = 'Kontrol Ediliyor';
-            stockColorx = Colors.orange;
-            _stockpsGenelVatan = 'Kontrol Ediliyor';
-            stockColorpsGenelVatan = Colors.orange;
-            _stockpsGenelMediaMarkt = 'Kontrol Ediliyor';
-            stockColorpsGenelMediaMarkt = Colors.orange;
-            _stockdualsenseVatanSiyah = 'Kontrol Ediliyor';
-            stockColordualsenseVatanSiyah = Colors.orange;
-            _stockdualsenseMediaMarktKirmizi = 'Kontrol Ediliyor';
-            stockColordualsenseMediaMarktKirmizi = Colors.orange;
-            _stockpsDigitalMediaMarkt = 'Kontrol Ediliyor';
-            stockColorpsDigitalMediaMarkt = Colors.orange;
-            _checkStock();
-            _checkStockXbox();
-            _checkStockPSVatan();
-            _checkStockPSMediaMarkt();
-            _checkStockDualsenseVatanSiyah();
-            _checkStockDualsenseMediaMarktKirmizi();
-            _checkStockpsDigitalMediaMarkt();
-            _date = DateTime.now().toString();
+            if (isKeyValid) {
+              _stock = 'Kontrol Ediliyor';
+              stockColor = Colors.orange;
+              _stockx = 'Kontrol Ediliyor';
+              stockColorx = Colors.orange;
+              _stockpsGenelVatan = 'Kontrol Ediliyor';
+              stockColorpsGenelVatan = Colors.orange;
+              _stockpsGenelMediaMarkt = 'Kontrol Ediliyor';
+              stockColorpsGenelMediaMarkt = Colors.orange;
+              _stockdualsenseVatanSiyah = 'Kontrol Ediliyor';
+              stockColordualsenseVatanSiyah = Colors.orange;
+              _stockdualsenseMediaMarktKirmizi = 'Kontrol Ediliyor';
+              stockColordualsenseMediaMarktKirmizi = Colors.orange;
+              _stockpsDigitalMediaMarkt = 'Kontrol Ediliyor';
+              stockColorpsDigitalMediaMarkt = Colors.orange;
+              _checkStock();
+              _checkStockXbox();
+              _checkStockPSVatan();
+              _checkStockPSMediaMarkt();
+              _checkStockDualsenseVatanSiyah();
+              _checkStockDualsenseMediaMarktKirmizi();
+              _checkStockpsDigitalMediaMarkt();
+              _date = DateTime.now().toString();
+            }
             //print(_date);
-            sifreCoz('XMUJY58bd1q1Q0J+qypadVHrP18Q67dn1/eQe5/5ins=');
           });
         },
         tooltip: 'Check Stock',
