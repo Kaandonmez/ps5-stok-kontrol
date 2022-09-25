@@ -519,7 +519,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   var now = DateTime.now();
-                  if (testTime!.isAfter(now) && makeCalculation) {
+                  if (makeCalculation && testTime!.isAfter(now)) {
                     //disable button
                     isKeyValid = true;
                     keyValueStatus = 'Key Geçerli!';
