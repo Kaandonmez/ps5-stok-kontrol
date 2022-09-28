@@ -1,21 +1,18 @@
-//make a ps5 amazon stock checker flutter app
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 import 'config.dart';
 import 'package:flutter/services.dart';
-import 'package:encrypt/encrypt.dart' as enc;
 import 'denc.dart';
 import 'dart:core';
 
-//hex color code 006FCD
-
 DateTime? testTime;
 
-void main() {
+int toplamStok = 0;
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -72,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<DateTime> sifreCoz(String decrypted1) async {
     String a = await decryptMyMessage(decrypted1);
     DateTime b = DateTime.parse(a);
-    print(b);
+    //print(b);
 
     setState(() {
       testTime = b;
@@ -95,12 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stock = 'Stokta olabilir!';
           stockColor = Colors.green;
+          toplamStok++;
         });
       }
     } else {
       setState(() {
         _stock = 'Yeniden Deneyin';
         stockColor = Colors.orange;
+        toplamStok++;
       });
     }
   }
@@ -121,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockx = 'Stokta olabilir !';
           stockColorx = Colors.green;
+          //toplamStok++;
         });
       }
     } else {
@@ -146,6 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockpsGenelVatan = 'Stokta olabilir !';
           stockColorpsGenelVatan = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -172,6 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockpsGenelMediaMarkt = 'Stokta olabilir !';
           stockColorpsGenelMediaMarkt = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -198,6 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockdualsenseVatanSiyah = 'Stokta olabilir !';
           stockColordualsenseVatanSiyah = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -224,6 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockdualsenseMediaMarktKirmizi = 'Stokta olabilir !';
           stockColordualsenseMediaMarktKirmizi = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -250,6 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockpsDigitalMediaMarkt = 'Stokta olabilir !';
           stockColorpsDigitalMediaMarkt = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -276,6 +281,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockdualsenseVatanBeyaz = 'Stokta olabilir !';
           stockColordualsenseVatanBeyaz = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -302,6 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockdualsenseVatanPembe = 'Stokta olabilir !';
           stockColordualsenseVatanPembe = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -328,6 +335,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockdualsenseVatanMavi = 'Stokta olabilir !';
           stockColordualsenseVatanMavi = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -354,6 +362,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockdualsenseVatanMor = 'Stokta olabilir !';
           stockColordualsenseVatanMor = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -380,6 +389,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockdualsenseVatanKirmizi = 'Stokta olabilir !';
           stockColordualsenseVatanKirmizi = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -406,6 +416,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockdualsenseVatanSarj = 'Stokta olabilir !';
           stockColorDualsenseSarjVatan = Colors.green;
+          //toplamStok++;
         });
       }
     } else {
@@ -432,6 +443,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           _stockpsGenelOverGame = 'Stokta olabilir !';
           stockColorpsGenelOverGame = Colors.green;
+          toplamStok++;
         });
       }
     } else {
@@ -445,6 +457,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    _date = DateTime.now().toString();
     _checkStock();
     _checkStockXbox();
     _checkStockPSVatan();
@@ -470,16 +483,50 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
         title: Text(widget.title),
-        leading: Text(
-          _date,
-          style: TextStyle(fontSize: 10),
+        leading: Column(
+          children: [
+            Text(
+              _date,
+              style: const TextStyle(fontSize: 10),
+            ),
+            Text(
+              "God Mode",
+              style: const TextStyle(fontSize: 10, color: Colors.yellow),
+            ),
+          ],
         ),
+        actions: [
+          Row(
+            children: [
+              const Center(
+                child: Text(
+                  'Toplam stok: ',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+              Center(
+                child: Text(
+                  toplamStok.toString() + "  ",
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.orange,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColor == Colors.red
+                    ? stockColor.withOpacity(0.15)
+                    : stockColor.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/sony-playstation-5-oyun-konsolu-ve-hfw-oyunu.html';
@@ -488,7 +535,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'PS5 CD\'li Bundle Vatan:  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -496,7 +543,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stock',
+                    _stock,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColor,
@@ -506,6 +553,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              //if _stock is equal to 'Stok yok' button color will be red else green
+              style: TextButton.styleFrom(
+                backgroundColor: stockColorx == Colors.red
+                    ? stockColorx.withOpacity(0.15)
+                    : stockColorx.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/oyun-konsollari-xbox/';
@@ -514,7 +567,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Xbox Vatan:  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -522,7 +575,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockx',
+                    _stockx,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColorx,
@@ -532,6 +585,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColorpsGenelVatan == Colors.red
+                    ? stockColorpsGenelVatan.withOpacity(0.15)
+                    : stockColorpsGenelVatan.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url = 'https://www.vatanbilgisayar.com/playstation/';
 
@@ -539,7 +597,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'PS5 Genel Stok Vatan :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -547,7 +605,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockpsGenelVatan',
+                    _stockpsGenelVatan,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColorpsGenelVatan,
@@ -557,6 +615,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColorpsGenelMediaMarkt == Colors.red
+                    ? stockColorpsGenelMediaMarkt.withOpacity(0.15)
+                    : stockColorpsGenelMediaMarkt.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.mediamarkt.com.tr/tr/category/_playstation-5-799012.html';
@@ -565,7 +628,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'PS5 Genel Stok MediaMarkt :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -573,7 +636,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockpsGenelMediaMarkt',
+                    _stockpsGenelMediaMarkt,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColorpsGenelMediaMarkt,
@@ -583,6 +646,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColordualsenseVatanBeyaz == Colors.red
+                    ? stockColordualsenseVatanBeyaz.withOpacity(0.15)
+                    : stockColordualsenseVatanBeyaz.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi.html';
@@ -591,7 +659,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Dualsense Beyaz Vatan:  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -599,7 +667,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockdualsenseVatanBeyaz',
+                    _stockdualsenseVatanBeyaz,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColordualsenseVatanBeyaz,
@@ -609,6 +677,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColordualsenseVatanSiyah == Colors.red
+                    ? stockColordualsenseVatanSiyah.withOpacity(0.15)
+                    : stockColordualsenseVatanSiyah.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-siyah.html';
@@ -617,7 +690,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Dualsense Siyah Vatan :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -625,7 +698,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockdualsenseVatanSiyah',
+                    _stockdualsenseVatanSiyah,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColordualsenseVatanSiyah,
@@ -635,6 +708,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColordualsenseVatanPembe == Colors.red
+                    ? stockColordualsenseVatanPembe.withOpacity(0.15)
+                    : stockColordualsenseVatanPembe.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-nova-pink.html';
@@ -643,7 +721,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Dualsense Pembe Vatan :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -651,7 +729,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockdualsenseVatanPembe',
+                    _stockdualsenseVatanPembe,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColordualsenseVatanPembe,
@@ -661,6 +739,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColordualsenseVatanMavi == Colors.red
+                    ? stockColordualsenseVatanMavi.withOpacity(0.15)
+                    : stockColordualsenseVatanMavi.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-starlight-blue.html';
@@ -669,7 +752,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Dualsense Mavi Vatan :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -677,7 +760,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockdualsenseVatanMavi',
+                    _stockdualsenseVatanMavi,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColordualsenseVatanMavi,
@@ -687,6 +770,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColordualsenseVatanMor == Colors.red
+                    ? stockColordualsenseVatanMor.withOpacity(0.15)
+                    : stockColordualsenseVatanMor.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-galactic-purple.html';
@@ -695,7 +783,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Dualsense Mor Vatan :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -703,7 +791,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockdualsenseVatanMor',
+                    _stockdualsenseVatanMor,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColordualsenseVatanMor,
@@ -713,6 +801,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColordualsenseVatanKirmizi == Colors.red
+                    ? stockColordualsenseVatanKirmizi.withOpacity(0.15)
+                    : stockColordualsenseVatanKirmizi.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-kirmizi.html';
@@ -721,7 +814,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Dualsense Kırmızı Vatan :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -729,7 +822,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockdualsenseVatanKirmizi',
+                    _stockdualsenseVatanKirmizi,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColordualsenseVatanKirmizi,
@@ -739,6 +832,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColordualsenseMediaMarktKirmizi ==
+                        Colors.red
+                    ? stockColordualsenseMediaMarktKirmizi.withOpacity(0.15)
+                    : stockColordualsenseMediaMarktKirmizi.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.mediamarkt.com.tr/tr/product/_sony-dualsense-wireless-controller-oyun-kolu-k%C4%B1rm%C4%B1z%C4%B1-1216107.html';
@@ -747,7 +846,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Dualsense Kırmızı MediaMarkt :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -755,7 +854,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockdualsenseMediaMarktKirmizi',
+                    _stockdualsenseMediaMarktKirmizi,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColordualsenseMediaMarktKirmizi,
@@ -766,6 +865,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColorpsDigitalMediaMarkt == Colors.red
+                    ? stockColorpsDigitalMediaMarkt.withOpacity(0.15)
+                    : stockColorpsDigitalMediaMarkt.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.mediamarkt.com.tr/tr/product/_sony-playstation-5-oyun-konsolu-beyaz-1212362.html';
@@ -774,7 +878,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'PS5 Digital MediaMarkt :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -782,7 +886,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockpsDigitalMediaMarkt',
+                    _stockpsDigitalMediaMarkt,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColorpsDigitalMediaMarkt,
@@ -793,6 +897,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColorDualsenseSarjVatan == Colors.red
+                    ? stockColorDualsenseSarjVatan.withOpacity(0.15)
+                    : stockColorDualsenseSarjVatan.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.vatanbilgisayar.com/sony-ps5-dualsense-sarj-istasyonu.html';
@@ -801,7 +910,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Dualsense Şarj İstasyonu Vatan :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -809,7 +918,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockdualsenseVatanSarj',
+                    _stockdualsenseVatanSarj,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColorDualsenseSarjVatan,
@@ -820,6 +929,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stockColorpsGenelOverGame == Colors.red
+                    ? stockColorpsGenelOverGame.withOpacity(0.15)
+                    : stockColorpsGenelOverGame.withOpacity(0.27),
+              ),
               onPressed: () {
                 String url =
                     'https://www.overgameweb.com/playstation/playstation-5/playstation5-konsol';
@@ -828,7 +942,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'PS Genel OverGame :  ',
                     style: TextStyle(
                         fontSize: 15,
@@ -836,7 +950,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$_stockpsGenelOverGame',
+                    _stockpsGenelOverGame,
                     style: TextStyle(
                         fontSize: 15,
                         color: stockColorpsGenelOverGame,
@@ -848,7 +962,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             //writeable text field
             Container(
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: TextField(
                 readOnly: isTextfieldWR,
                 onChanged: (value) {
@@ -865,10 +979,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText:
                       'Yenileme ikonu yeşil olduysa doğru key değeri girdiniz.',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                       fontSize: 15,
                       color: Colors.lime,
                       fontWeight: FontWeight.bold),
@@ -876,7 +990,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   suffixStyle: TextStyle(color: refreshIconColor),
                   helperText:
                       'Key değeri benzersizdir ve sadece\n geliştirici tarafından verilir.',
-                  helperStyle: TextStyle(color: Colors.white),
+                  helperStyle: const TextStyle(color: Colors.white),
                 ),
               ),
             ),
@@ -886,7 +1000,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
               ),
               onPressed: () {
-                https: //forum.donanimhaber.com/playstation-5-stok-takip-ve-sohbet--152062533
                 setState(() {
                   var now = DateTime.now();
                   if (makeCalculation && testTime!.isAfter(now)) {
@@ -903,12 +1016,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
                 });
               },
-              child: Text(
+              child: const Text(
                 'Key\'i test et',
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            Divider(
+            const Divider(
               color: Colors.deepOrange,
               height: 20,
               thickness: 1,
@@ -927,12 +1040,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   launch(url.toString(), forceWebView: false);
                 },
-                child: Text(
+                child: const Text(
                   'Donanım Haber Stok/Sohbet Konusuna Git',
                   style: TextStyle(color: Colors.white),
                 )),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             TextButton(
                 style: ButtonStyle(
@@ -945,7 +1058,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   launch(url.toString(), forceWebView: false);
                 },
-                child: Text(
+                child: const Text(
                   'Donanım Haber Stok/Bildirim Konusuna Git',
                   style: TextStyle(color: Colors.white),
                 )),
@@ -963,7 +1076,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   launch(url.toString(), forceWebView: false);
                 },
                 child: Row(
-                  children: <Widget>[
+                  children: const <Widget>[
                     Text(
                       'PS5 Digital Arçelik Sayfası',
                       style: TextStyle(
@@ -991,7 +1104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   launch(url.toString(), forceWebView: false);
                 },
                 child: Row(
-                  children: <Widget>[
+                  children: const <Widget>[
                     Text(
                       'PS5 Digital Beko Sayfası',
                       style: TextStyle(
@@ -1009,69 +1122,59 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: refreshIconColor,
         onPressed: () async {
-          // _checkStock();
-          // _checkStockXbox();
-          // _checkStockPSVatan();
-          // _checkStockPSMediaMarkt();
-          //url_laucher lauch this url: https://www.google.com.tr/
-
-          //String url = 'https://www.google.com.tr/';
-
-          //launch(url.toString(), forceWebView: false);
-
           setState(() {
-            if (true) {
-              _stock = 'Kontrol Ediliyor';
-              stockColor = Colors.orange;
-              _stockx = 'Kontrol Ediliyor';
-              stockColorx = Colors.orange;
-              _stockpsGenelVatan = 'Kontrol Ediliyor';
-              stockColorpsGenelVatan = Colors.orange;
-              _stockpsGenelMediaMarkt = 'Kontrol Ediliyor';
-              stockColorpsGenelMediaMarkt = Colors.orange;
-              _stockdualsenseVatanSiyah = 'Kontrol Ediliyor';
-              stockColordualsenseVatanSiyah = Colors.orange;
-              _stockdualsenseMediaMarktKirmizi = 'Kontrol Ediliyor';
-              stockColordualsenseMediaMarktKirmizi = Colors.orange;
-              _stockpsDigitalMediaMarkt = 'Kontrol Ediliyor';
-              stockColorpsDigitalMediaMarkt = Colors.orange;
-              _stockdualsenseVatanBeyaz = 'Kontrol Ediliyor';
-              stockColordualsenseVatanBeyaz = Colors.orange;
-              _stockdualsenseVatanPembe = 'Kontrol Ediliyor';
-              stockColordualsenseVatanPembe = Colors.orange;
-              _stockdualsenseVatanMavi = 'Kontrol Ediliyor';
-              stockColordualsenseVatanMavi = Colors.orange;
-              _stockdualsenseVatanMor = 'Kontrol Ediliyor';
-              stockColordualsenseVatanMor = Colors.orange;
-              _stockdualsenseVatanKirmizi = 'Kontrol Ediliyor';
-              stockColordualsenseVatanKirmizi = Colors.orange;
-              _stockdualsenseVatanSarj = 'Kontrol Ediliyor';
-              stockColorDualsenseSarjVatan = Colors.orange;
-              _stockpsGenelOverGame = 'Kontrol Ediliyor';
-              stockColorpsGenelOverGame = Colors.orange;
+            toplamStok = 0;
+            _stock = 'Kontrol Ediliyor';
+            stockColor = Colors.orange;
+            _stockx = 'Kontrol Ediliyor';
+            stockColorx = Colors.orange;
+            _stockpsGenelVatan = 'Kontrol Ediliyor';
+            stockColorpsGenelVatan = Colors.orange;
+            _stockpsGenelMediaMarkt = 'Kontrol Ediliyor';
+            stockColorpsGenelMediaMarkt = Colors.orange;
+            _stockdualsenseVatanSiyah = 'Kontrol Ediliyor';
+            stockColordualsenseVatanSiyah = Colors.orange;
+            _stockdualsenseMediaMarktKirmizi = 'Kontrol Ediliyor';
+            stockColordualsenseMediaMarktKirmizi = Colors.orange;
+            _stockpsDigitalMediaMarkt = 'Kontrol Ediliyor';
+            stockColorpsDigitalMediaMarkt = Colors.orange;
+            _stockdualsenseVatanBeyaz = 'Kontrol Ediliyor';
+            stockColordualsenseVatanBeyaz = Colors.orange;
+            _stockdualsenseVatanPembe = 'Kontrol Ediliyor';
+            stockColordualsenseVatanPembe = Colors.orange;
+            _stockdualsenseVatanMavi = 'Kontrol Ediliyor';
+            stockColordualsenseVatanMavi = Colors.orange;
+            _stockdualsenseVatanMor = 'Kontrol Ediliyor';
+            stockColordualsenseVatanMor = Colors.orange;
+            _stockdualsenseVatanKirmizi = 'Kontrol Ediliyor';
+            stockColordualsenseVatanKirmizi = Colors.orange;
+            _stockdualsenseVatanSarj = 'Kontrol Ediliyor';
+            stockColorDualsenseSarjVatan = Colors.orange;
+            _stockpsGenelOverGame = 'Kontrol Ediliyor';
+            stockColorpsGenelOverGame = Colors.orange;
 
-              _checkStock();
-              _checkStockXbox();
-              _checkStockPSVatan();
-              _checkStockPSMediaMarkt();
-              _checkStockDualsenseVatanSiyah();
-              _checkStockDualsenseMediaMarktKirmizi();
-              _checkStockpsDigitalMediaMarkt();
-              _checkStockdualsenseVatanBeyaz();
-              _checkStockdualsenseVatanPembe();
-              _checkStockdualsenseVatanMavi();
-              _checkStockdualsenseVatanMor();
-              _checkStockdualsenseVatanKirmizi();
-              _checkStockdualsenseVatanSarj();
-              _checkStockPSGenelOverGame();
+            _checkStock();
+            _checkStockXbox();
+            _checkStockPSVatan();
+            _checkStockPSMediaMarkt();
+            _checkStockDualsenseVatanSiyah();
+            _checkStockDualsenseMediaMarktKirmizi();
+            _checkStockpsDigitalMediaMarkt();
+            _checkStockdualsenseVatanBeyaz();
+            _checkStockdualsenseVatanPembe();
+            _checkStockdualsenseVatanMavi();
+            _checkStockdualsenseVatanMor();
+            _checkStockdualsenseVatanKirmizi();
+            _checkStockdualsenseVatanSarj();
+            _checkStockPSGenelOverGame();
 
-              _date = DateTime.now().toString();
-            }
+            _date = DateTime.now().toString();
+
             //print(_date);
           });
         },
         tooltip: 'Check Stock',
-        child: Icon(
+        child: const Icon(
           Icons.refresh_rounded,
           size: 50,
         ),

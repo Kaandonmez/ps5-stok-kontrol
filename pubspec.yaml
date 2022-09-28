@@ -34,8 +34,10 @@ dependencies:
   encrypt: ^5.0.1
   flutter:
     sdk: flutter
+  
   http: ^0.13.5
   url_launcher: 6.0.20
+  
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
