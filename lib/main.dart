@@ -1020,7 +1020,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //launch(url.toString(), forceWebView: false);
 
           setState(() {
-            if (isKeyValid) {
+            if (true) {
               _stock = 'Kontrol Ediliyor';
               stockColor = Colors.orange;
               _stockx = 'Kontrol Ediliyor';
