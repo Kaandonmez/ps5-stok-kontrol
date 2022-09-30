@@ -5,6 +5,7 @@ import 'config.dart';
 import 'package:flutter/services.dart';
 import 'denc.dart';
 import 'dart:core';
+import 'package:vibration/vibration.dart';
 
 DateTime? testTime;
 
@@ -19,6 +20,9 @@ void main() async {
   ]).then((value) => runApp(MyApp()));
   runApp(MyApp());
 }
+
+//press button every 5 seconds
+//https://stackoverflow.com/questions/56474601/how-to-make-a-button-press-every-5-seconds-in-flutter
 
 class MyApp extends StatelessWidget {
   @override
@@ -93,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _stock = 'Stokta olabilir!';
           stockColor = Colors.green;
           toplamStok++;
+          Vibration.vibrate(duration: 50, amplitude: 128);
         });
       }
     } else {
@@ -121,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _stockx = 'Stokta olabilir !';
           stockColorx = Colors.green;
           //toplamStok++;
+          //vibrate
         });
       }
     } else {
@@ -147,6 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _stockpsGenelVatan = 'Stokta olabilir !';
           stockColorpsGenelVatan = Colors.green;
           toplamStok++;
+          Vibration.vibrate(duration: 50, amplitude: 128);
         });
       }
     } else {
@@ -174,6 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _stockpsGenelMediaMarkt = 'Stokta olabilir !';
           stockColorpsGenelMediaMarkt = Colors.green;
           toplamStok++;
+          Vibration.vibrate(duration: 50, amplitude: 128);
         });
       }
     } else {
@@ -255,6 +263,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _stockpsDigitalMediaMarkt = 'Stokta olabilir !';
           stockColorpsDigitalMediaMarkt = Colors.green;
           toplamStok++;
+          Vibration.vibrate(duration: 50, amplitude: 128);
         });
       }
     } else {
@@ -444,6 +453,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _stockpsGenelOverGame = 'Stokta olabilir !';
           stockColorpsGenelOverGame = Colors.green;
           toplamStok++;
+          Vibration.vibrate(duration: 50, amplitude: 128);
         });
       }
     } else {
@@ -1120,6 +1130,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        key: const Key('refresh'),
         backgroundColor: refreshIconColor,
         onPressed: () async {
           setState(() {
