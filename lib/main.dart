@@ -69,6 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String _stockdualsenseVatanKirmizi = 'Kontrol Ediliyor';
   String _stockdualsenseVatanSarj = 'Kontrol Ediliyor';
   String _stockpsGenelOverGame = 'Kontrol Ediliyor';
+  String _stockHepsiburadaFiyatGenel = 'Kontrol Ediliyor';
+  String _stockTeknosaFiyatGenel = 'Kontrol Ediliyor';
+  String _stokHepsiSonyGenel = 'Kontrol Ediliyor';
+  String _stockAmazon = 'Kontrol Ediliyor';
 
   Future<DateTime> sifreCoz(String decrypted1) async {
     String a = await decryptMyMessage(decrypted1);
@@ -115,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('UYGUN ÜRÜN BULUNAMADI.')) {
         setState(() {
           _stockx = 'Stok yok';
@@ -142,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('UYGUN ÜRÜN BULUNAMADI.')) {
         setState(() {
           _stockpsGenelVatan = 'Stok yok';
@@ -170,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('<h1>Playstation 5 <em>(0)</em></h1>')) {
         setState(() {
           _stockpsGenelMediaMarkt = 'Stok yok';
@@ -198,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Tükendi')) {
         setState(() {
           _stockdualsenseVatanSiyah = 'Stok yok';
@@ -225,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Ürün Tükendi')) {
         setState(() {
           _stockdualsenseMediaMarktKirmizi = 'Stok yok';
@@ -252,7 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Ürün Tükendi')) {
         setState(() {
           _stockpsDigitalMediaMarkt = 'Stok yok';
@@ -280,7 +284,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Tükendi')) {
         setState(() {
           _stockdualsenseVatanBeyaz = 'Stok yok';
@@ -307,7 +311,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Tükendi')) {
         setState(() {
           _stockdualsenseVatanPembe = 'Stok yok';
@@ -334,7 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Tükendi')) {
         setState(() {
           _stockdualsenseVatanMavi = 'Stok yok';
@@ -361,7 +365,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Tükendi')) {
         setState(() {
           _stockdualsenseVatanMor = 'Stok yok';
@@ -388,7 +392,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Tükendi')) {
         setState(() {
           _stockdualsenseVatanKirmizi = 'Stok yok';
@@ -415,7 +419,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('Tükendi')) {
         setState(() {
           _stockdualsenseVatanSarj = 'Stok yok';
@@ -442,7 +446,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = response.body;
-      //RegExp exp = new RegExp('XBOX modellerinde 0 adet ürün');
+
       if (body.contains('<i class="icon-cart-list"></i>') == false) {
         setState(() {
           _stockpsGenelOverGame = 'Stok yok';
@@ -464,24 +468,156 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future<void> _checkStockPSGenelHepsiburada() async {
+    var url = Uri.parse(
+        'https://www.hepsiburada.com/playstation-5-konsol-c-80757006?filtreler=fiyat:min-15000&siralama=artanfiyat');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var body = response.body;
+
+      //fetch data from given xpath
+
+      if (body.contains('Seçimlerinize uygun ürün bulunamadı')) {
+        setState(() {
+          _stockHepsiburadaFiyatGenel = '15.000₺ üzerinde';
+          stokColorHepsiburadaFiyatGenel = Colors.red;
+        });
+      } else {
+        setState(() {
+          _stockHepsiburadaFiyatGenel = '15.000₺ altında Stokta olabilir !';
+          stokColorHepsiburadaFiyatGenel = Colors.green;
+          toplamStok++;
+          Vibration.vibrate(duration: 50, amplitude: 128);
+        });
+      }
+    } else {
+      setState(() {
+        _stockHepsiburadaFiyatGenel = 'Error';
+        stokColorHepsiburadaFiyatGenel = Colors.orange;
+      });
+    }
+  }
+
+  Future<void> _checkStokTeknosaFiyatGenel() async {
+    var url = Uri.parse(
+        'https://www.teknosa.com/playstation-oyun-konsolu-c-119007001?s=%3Arelevance%3Abrand%3A2534%3ApriceValue%3Amin-15000');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var body = response.body;
+
+      if (body.contains('0 Sonuç')) {
+        setState(() {
+          _stockTeknosaFiyatGenel = '15.000₺ üzerinde';
+          stokColorTeknosaFiyatGenel = Colors.red;
+        });
+      } else {
+        setState(() {
+          _stockTeknosaFiyatGenel = '15.000₺ altında Stokta olabilir !';
+          stokColorTeknosaFiyatGenel = Colors.green;
+          toplamStok++;
+          Vibration.vibrate(duration: 50, amplitude: 128);
+        });
+      }
+    } else {
+      setState(() {
+        _stockTeknosaFiyatGenel = 'Error';
+        stokColorTeknosaFiyatGenel = Colors.orange;
+      });
+    }
+  }
+
+  Future<void> _checkStokHepsiSonyGenel() async {
+    var url =
+        Uri.parse('https://www.hepsisony.com/ps5-konsol-ve-konsol-paketleri');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var body = response.body;
+
+      //find out how many of string like "STOKTA YOK"
+      var countAll = body.split('Stokta Yok').length - 1;
+
+      var countOnlyInStock = body.split('"itemscope"').length - 1;
+
+      if (countAll == countOnlyInStock) {
+        setState(() {
+          _stokHepsiSonyGenel = 'Stok yok';
+          stokColorHepsiSonyGenel = Colors.red;
+        });
+      } else {
+        setState(() {
+          _stokHepsiSonyGenel = 'Stokta olabilir !';
+          stokColorHepsiSonyGenel = Colors.green;
+          toplamStok++;
+          Vibration.vibrate(duration: 50, amplitude: 128);
+        });
+      }
+    } else {
+      setState(() {
+        _stokHepsiSonyGenel = 'Error';
+        stokColorHepsiSonyGenel = Colors.orange;
+      });
+    }
+  }
+
+  Future<void> _checkStokAmazon() async {
+    var url = Uri.parse(
+        'https://www.amazon.com.tr/Sony-SONY-PlayStation-5-Konsol/dp/B08LQZGF76');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var body = response.body;
+
+      //get a-price-whole
+      var price = body
+          .split('a-price-whole">')[1]
+          .split('<span class="a-price-decimal">')[0];
+      //delete dot
+      price = price.replaceAll('.', '');
+      //price to int
+      var priceInt = int.parse(price);
+
+      if (priceInt > 16000) {
+        setState(() {
+          _stockAmazon = 'Stok yok';
+          stokColorAmazon = Colors.red;
+        });
+      } else {
+        setState(() {
+          _stockAmazon = 'Stokta olabilir !';
+          stokColorAmazon = Colors.green;
+          toplamStok++;
+          Vibration.vibrate(duration: 100, amplitude: 128);
+        });
+      }
+    } else {
+      setState(() {
+        _stockAmazon = 'Error';
+        stokColorAmazon = Colors.orange;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _date = DateTime.now().toString();
     _checkStock();
-    _checkStockXbox();
+    // _checkStockXbox();
     _checkStockPSVatan();
     _checkStockPSMediaMarkt();
-    _checkStockDualsenseVatanSiyah();
-    _checkStockDualsenseMediaMarktKirmizi();
+    // _checkStockDualsenseVatanSiyah();
+    // _checkStockDualsenseMediaMarktKirmizi();
     _checkStockpsDigitalMediaMarkt();
-    _checkStockdualsenseVatanBeyaz();
-    _checkStockdualsenseVatanPembe();
-    _checkStockdualsenseVatanMavi();
-    _checkStockdualsenseVatanMor();
-    _checkStockdualsenseVatanKirmizi();
-    _checkStockdualsenseVatanSarj();
+    // _checkStockdualsenseVatanBeyaz();
+    // _checkStockdualsenseVatanPembe();
+    // _checkStockdualsenseVatanMavi();
+    // _checkStockdualsenseVatanMor();
+    // _checkStockdualsenseVatanKirmizi();
+    // _checkStockdualsenseVatanSarj();
     _checkStockPSGenelOverGame();
+    _checkStockPSGenelHepsiburada();
+    _checkStokTeknosaFiyatGenel();
+    _checkStokHepsiSonyGenel();
+    _checkStokAmazon();
   }
 
   //get current date
@@ -562,38 +698,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            TextButton(
-              //if _stock is equal to 'Stok yok' button color will be red else green
-              style: TextButton.styleFrom(
-                backgroundColor: stockColorx == Colors.red
-                    ? stockColorx.withOpacity(0.15)
-                    : stockColorx.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.vatanbilgisayar.com/oyun-konsollari-xbox/';
+            // TextButton(
+            //   //if _stock is equal to 'Stok yok' button color will be red else green
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColorx == Colors.red
+            //         ? stockColorx.withOpacity(0.15)
+            //         : stockColorx.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.vatanbilgisayar.com/oyun-konsollari-xbox/';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Xbox Vatan:  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockx,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColorx,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Xbox Vatan:  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockx,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColorx,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: stockColorpsGenelVatan == Colors.red
@@ -655,224 +791,224 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: stockColordualsenseVatanBeyaz == Colors.red
-                    ? stockColordualsenseVatanBeyaz.withOpacity(0.15)
-                    : stockColordualsenseVatanBeyaz.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi.html';
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColordualsenseVatanBeyaz == Colors.red
+            //         ? stockColordualsenseVatanBeyaz.withOpacity(0.15)
+            //         : stockColordualsenseVatanBeyaz.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi.html';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Dualsense Beyaz Vatan:  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockdualsenseVatanBeyaz,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColordualsenseVatanBeyaz,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: stockColordualsenseVatanSiyah == Colors.red
-                    ? stockColordualsenseVatanSiyah.withOpacity(0.15)
-                    : stockColordualsenseVatanSiyah.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-siyah.html';
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Dualsense Beyaz Vatan:  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockdualsenseVatanBeyaz,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColordualsenseVatanBeyaz,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColordualsenseVatanSiyah == Colors.red
+            //         ? stockColordualsenseVatanSiyah.withOpacity(0.15)
+            //         : stockColordualsenseVatanSiyah.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-siyah.html';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Dualsense Siyah Vatan :  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockdualsenseVatanSiyah,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColordualsenseVatanSiyah,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: stockColordualsenseVatanPembe == Colors.red
-                    ? stockColordualsenseVatanPembe.withOpacity(0.15)
-                    : stockColordualsenseVatanPembe.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-nova-pink.html';
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Dualsense Siyah Vatan :  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockdualsenseVatanSiyah,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColordualsenseVatanSiyah,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColordualsenseVatanPembe == Colors.red
+            //         ? stockColordualsenseVatanPembe.withOpacity(0.15)
+            //         : stockColordualsenseVatanPembe.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-nova-pink.html';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Dualsense Pembe Vatan :  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockdualsenseVatanPembe,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColordualsenseVatanPembe,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: stockColordualsenseVatanMavi == Colors.red
-                    ? stockColordualsenseVatanMavi.withOpacity(0.15)
-                    : stockColordualsenseVatanMavi.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-starlight-blue.html';
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Dualsense Pembe Vatan :  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockdualsenseVatanPembe,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColordualsenseVatanPembe,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColordualsenseVatanMavi == Colors.red
+            //         ? stockColordualsenseVatanMavi.withOpacity(0.15)
+            //         : stockColordualsenseVatanMavi.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-starlight-blue.html';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Dualsense Mavi Vatan :  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockdualsenseVatanMavi,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColordualsenseVatanMavi,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: stockColordualsenseVatanMor == Colors.red
-                    ? stockColordualsenseVatanMor.withOpacity(0.15)
-                    : stockColordualsenseVatanMor.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-galactic-purple.html';
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Dualsense Mavi Vatan :  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockdualsenseVatanMavi,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColordualsenseVatanMavi,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColordualsenseVatanMor == Colors.red
+            //         ? stockColordualsenseVatanMor.withOpacity(0.15)
+            //         : stockColordualsenseVatanMor.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-galactic-purple.html';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Dualsense Mor Vatan :  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockdualsenseVatanMor,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColordualsenseVatanMor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: stockColordualsenseVatanKirmizi == Colors.red
-                    ? stockColordualsenseVatanKirmizi.withOpacity(0.15)
-                    : stockColordualsenseVatanKirmizi.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-kirmizi.html';
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Dualsense Mor Vatan :  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockdualsenseVatanMor,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColordualsenseVatanMor,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColordualsenseVatanKirmizi == Colors.red
+            //         ? stockColordualsenseVatanKirmizi.withOpacity(0.15)
+            //         : stockColordualsenseVatanKirmizi.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.vatanbilgisayar.com/sony-ps5-dualsense-kablosuz-kontrol-cihazi-kirmizi.html';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Dualsense Kırmızı Vatan :  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockdualsenseVatanKirmizi,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColordualsenseVatanKirmizi,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: stockColordualsenseMediaMarktKirmizi ==
-                        Colors.red
-                    ? stockColordualsenseMediaMarktKirmizi.withOpacity(0.15)
-                    : stockColordualsenseMediaMarktKirmizi.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.mediamarkt.com.tr/tr/product/_sony-dualsense-wireless-controller-oyun-kolu-k%C4%B1rm%C4%B1z%C4%B1-1216107.html';
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Dualsense Kırmızı Vatan :  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockdualsenseVatanKirmizi,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColordualsenseVatanKirmizi,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColordualsenseMediaMarktKirmizi ==
+            //             Colors.red
+            //         ? stockColordualsenseMediaMarktKirmizi.withOpacity(0.15)
+            //         : stockColordualsenseMediaMarktKirmizi.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.mediamarkt.com.tr/tr/product/_sony-dualsense-wireless-controller-oyun-kolu-k%C4%B1rm%C4%B1z%C4%B1-1216107.html';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Dualsense Kırmızı MediaMarkt :  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockdualsenseMediaMarktKirmizi,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColordualsenseMediaMarktKirmizi,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Dualsense Kırmızı MediaMarkt :  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockdualsenseMediaMarktKirmizi,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColordualsenseMediaMarktKirmizi,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
 
             TextButton(
               style: TextButton.styleFrom(
@@ -906,37 +1042,37 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
 
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: stockColorDualsenseSarjVatan == Colors.red
-                    ? stockColorDualsenseSarjVatan.withOpacity(0.15)
-                    : stockColorDualsenseSarjVatan.withOpacity(0.27),
-              ),
-              onPressed: () {
-                String url =
-                    'https://www.vatanbilgisayar.com/sony-ps5-dualsense-sarj-istasyonu.html';
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     backgroundColor: stockColorDualsenseSarjVatan == Colors.red
+            //         ? stockColorDualsenseSarjVatan.withOpacity(0.15)
+            //         : stockColorDualsenseSarjVatan.withOpacity(0.27),
+            //   ),
+            //   onPressed: () {
+            //     String url =
+            //         'https://www.vatanbilgisayar.com/sony-ps5-dualsense-sarj-istasyonu.html';
 
-                launch(url.toString(), forceWebView: false);
-              },
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    'Dualsense Şarj İstasyonu Vatan :  ',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Color(0xff006FCD),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    _stockdualsenseVatanSarj,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: stockColorDualsenseSarjVatan,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
+            //     launch(url.toString(), forceWebView: false);
+            //   },
+            //   child: Row(
+            //     children: <Widget>[
+            //       const Text(
+            //         'Dualsense Şarj İstasyonu Vatan :  ',
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: Color(0xff006FCD),
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         _stockdualsenseVatanSarj,
+            //         style: TextStyle(
+            //             fontSize: 15,
+            //             color: stockColorDualsenseSarjVatan,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
 
             TextButton(
               style: TextButton.styleFrom(
@@ -953,7 +1089,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 children: <Widget>[
                   const Text(
-                    'PS Genel OverGame :  ',
+                    'PS Genel Stok OverGame :  ',
                     style: TextStyle(
                         fontSize: 15,
                         color: Color(0xff006FCD),
@@ -970,67 +1106,195 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
 
-            //writeable text field
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: TextField(
-                readOnly: isTextfieldWR,
-                onChanged: (value) {
-                  setState(() {
-                    //get now time
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stokColorHepsiburadaFiyatGenel == Colors.red
+                    ? stokColorHepsiburadaFiyatGenel.withOpacity(0.15)
+                    : stokColorHepsiburadaFiyatGenel.withOpacity(0.27),
+              ),
+              onPressed: () {
+                String url =
+                    'https://www.hepsiburada.com/playstation-5-konsol-c-80757006?siralama=artanfiyat';
 
-                    keyValue = value;
-
-                    //if keyvalue is exactly 388 characters
-                    if (keyValue.length == 388) {
-                      makeCalculation = true;
-                      sifreCoz(keyValue);
-                    }
-                  });
-                },
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText:
-                      'Yenileme ikonu yeşil olduysa doğru key değeri girdiniz.',
-                  labelStyle: const TextStyle(
-                      fontSize: 15,
-                      color: Colors.lime,
-                      fontWeight: FontWeight.bold),
-                  suffixText: keyValueStatus,
-                  suffixStyle: TextStyle(color: refreshIconColor),
-                  helperText:
-                      'Key değeri benzersizdir ve sadece\n geliştirici tarafından verilir.',
-                  helperStyle: const TextStyle(color: Colors.white),
-                ),
+                launch(url.toString(), forceWebView: false);
+              },
+              child: Row(
+                children: <Widget>[
+                  const Text(
+                    'HepsiBurada fiyat:  ',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xff006FCD),
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    _stockHepsiburadaFiyatGenel,
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: stokColorHepsiburadaFiyatGenel,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
 
             TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              style: TextButton.styleFrom(
+                backgroundColor: stokColorTeknosaFiyatGenel == Colors.red
+                    ? stokColorTeknosaFiyatGenel.withOpacity(0.15)
+                    : stokColorTeknosaFiyatGenel.withOpacity(0.27),
               ),
               onPressed: () {
-                setState(() {
-                  var now = DateTime.now();
-                  if (makeCalculation && testTime!.isAfter(now)) {
-                    //disable button
-                    isKeyValid = true;
-                    keyValueStatus = 'Key Geçerli!';
-                    refreshIconColor = Colors.green;
-                    isTextfieldWR = true;
-                  } else {
-                    //enable button
-                    isKeyValid = false;
-                    refreshIconColor = Colors.red;
-                    keyValueStatus = 'Hatalı key değeri';
-                  }
-                });
+                String url =
+                    'https://www.teknosa.com/sony-playstation-oyun-konsolu-bc-119007001';
+
+                launch(url.toString(), forceWebView: false);
               },
-              child: const Text(
-                'Key\'i test et',
-                style: TextStyle(color: Colors.white),
+              child: Row(
+                children: <Widget>[
+                  const Text(
+                    'Teknosa fiyat:  ',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xff006FCD),
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    _stockTeknosaFiyatGenel,
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: stokColorTeknosaFiyatGenel,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
+
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stokColorHepsiSonyGenel == Colors.red
+                    ? stokColorHepsiSonyGenel.withOpacity(0.15)
+                    : stokColorHepsiSonyGenel.withOpacity(0.27),
+              ),
+              onPressed: () {
+                String url =
+                    'https://www.hepsisony.com/ps5-konsol-ve-konsol-paketleri';
+
+                launch(url.toString(), forceWebView: false);
+              },
+              child: Row(
+                children: <Widget>[
+                  const Text(
+                    'PS5 Genel Stok HepsiSony :  ',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xff006FCD),
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    _stokHepsiSonyGenel,
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: stokColorHepsiSonyGenel,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: stokColorAmazon == Colors.red
+                    ? stokColorAmazon.withOpacity(0.15)
+                    : stokColorAmazon.withOpacity(0.27),
+              ),
+              onPressed: () {
+                String url =
+                    'https://www.amazon.com.tr/Sony-SONY-PlayStation-5-Konsol/dp/B08LQZGF76';
+
+                launch(url.toString(), forceWebView: false);
+              },
+              child: Row(
+                children: <Widget>[
+                  const Text(
+                    'PS5 Amazon :  ',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Color(0xff006FCD),
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    _stockAmazon,
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: stokColorAmazon,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+
+            //writeable text field
+            // Container(
+            //   margin: const EdgeInsets.all(10),
+            //   child: TextField(
+            //     readOnly: isTextfieldWR,
+            //     onChanged: (value) {
+            //       setState(() {
+            //         //get now time
+
+            //         keyValue = value;
+
+            //         //if keyvalue is exactly 388 characters
+            //         if (keyValue.length == 388) {
+            //           makeCalculation = true;
+            //           sifreCoz(keyValue);
+            //         }
+            //       });
+            //     },
+            //     decoration: InputDecoration(
+            //       border: const OutlineInputBorder(),
+            //       labelText:
+            //           'Yenileme ikonu yeşil olduysa doğru key değeri girdiniz.',
+            //       labelStyle: const TextStyle(
+            //           fontSize: 15,
+            //           color: Colors.lime,
+            //           fontWeight: FontWeight.bold),
+            //       suffixText: keyValueStatus,
+            //       suffixStyle: TextStyle(color: refreshIconColor),
+            //       helperText:
+            //           'Key değeri benzersizdir ve sadece\n geliştirici tarafından verilir.',
+            //       helperStyle: const TextStyle(color: Colors.white),
+            //     ),
+            //   ),
+            // ),
+
+            // TextButton(
+            //   style: ButtonStyle(
+            //     backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+            //   ),
+            //   onPressed: () {
+            //     setState(() {
+            //       var now = DateTime.now();
+            //       if (makeCalculation && testTime!.isAfter(now)) {
+            //         //disable button
+            //         isKeyValid = true;
+            //         keyValueStatus = 'Key Geçerli!';
+            //         refreshIconColor = Colors.green;
+            //         isTextfieldWR = true;
+            //       } else {
+            //         //enable button
+            //         isKeyValid = false;
+            //         refreshIconColor = Colors.red;
+            //         keyValueStatus = 'Hatalı key değeri';
+            //       }
+            //     });
+            //   },
+            //   child: const Text(
+            //     'Key\'i test et',
+            //     style: TextStyle(color: Colors.white),
+            //   ),
+            // ),
             const Divider(
               color: Colors.deepOrange,
               height: 20,
@@ -1137,47 +1401,59 @@ class _MyHomePageState extends State<MyHomePage> {
             toplamStok = 0;
             _stock = 'Kontrol Ediliyor';
             stockColor = Colors.orange;
-            _stockx = 'Kontrol Ediliyor';
-            stockColorx = Colors.orange;
+            // _stockx = 'Kontrol Ediliyor';
+            // stockColorx = Colors.orange;
             _stockpsGenelVatan = 'Kontrol Ediliyor';
             stockColorpsGenelVatan = Colors.orange;
             _stockpsGenelMediaMarkt = 'Kontrol Ediliyor';
             stockColorpsGenelMediaMarkt = Colors.orange;
-            _stockdualsenseVatanSiyah = 'Kontrol Ediliyor';
-            stockColordualsenseVatanSiyah = Colors.orange;
-            _stockdualsenseMediaMarktKirmizi = 'Kontrol Ediliyor';
-            stockColordualsenseMediaMarktKirmizi = Colors.orange;
-            _stockpsDigitalMediaMarkt = 'Kontrol Ediliyor';
+            // _stockdualsenseVatanSiyah = 'Kontrol Ediliyor';
+            // stockColordualsenseVatanSiyah = Colors.orange;
+            // _stockdualsenseMediaMarktKirmizi = 'Kontrol Ediliyor';
+            // stockColordualsenseMediaMarktKirmizi = Colors.orange;
+            // _stockpsDigitalMediaMarkt = 'Kontrol Ediliyor';
             stockColorpsDigitalMediaMarkt = Colors.orange;
             _stockdualsenseVatanBeyaz = 'Kontrol Ediliyor';
-            stockColordualsenseVatanBeyaz = Colors.orange;
-            _stockdualsenseVatanPembe = 'Kontrol Ediliyor';
-            stockColordualsenseVatanPembe = Colors.orange;
-            _stockdualsenseVatanMavi = 'Kontrol Ediliyor';
-            stockColordualsenseVatanMavi = Colors.orange;
-            _stockdualsenseVatanMor = 'Kontrol Ediliyor';
-            stockColordualsenseVatanMor = Colors.orange;
-            _stockdualsenseVatanKirmizi = 'Kontrol Ediliyor';
-            stockColordualsenseVatanKirmizi = Colors.orange;
-            _stockdualsenseVatanSarj = 'Kontrol Ediliyor';
-            stockColorDualsenseSarjVatan = Colors.orange;
+            // stockColordualsenseVatanBeyaz = Colors.orange;
+            // _stockdualsenseVatanPembe = 'Kontrol Ediliyor';
+            // stockColordualsenseVatanPembe = Colors.orange;
+            // _stockdualsenseVatanMavi = 'Kontrol Ediliyor';
+            // stockColordualsenseVatanMavi = Colors.orange;
+            // _stockdualsenseVatanMor = 'Kontrol Ediliyor';
+            // stockColordualsenseVatanMor = Colors.orange;
+            // _stockdualsenseVatanKirmizi = 'Kontrol Ediliyor';
+            // stockColordualsenseVatanKirmizi = Colors.orange;
+            // _stockdualsenseVatanSarj = 'Kontrol Ediliyor';
+            // stockColorDualsenseSarjVatan = Colors.orange;
             _stockpsGenelOverGame = 'Kontrol Ediliyor';
             stockColorpsGenelOverGame = Colors.orange;
+            _stockHepsiburadaFiyatGenel = 'Kontrol Ediliyor';
+            stokColorHepsiburadaFiyatGenel = Colors.orange;
+            _stockTeknosaFiyatGenel = 'Kontrol Ediliyor';
+            stokColorTeknosaFiyatGenel = Colors.orange;
+            _stokHepsiSonyGenel = 'Kontrol Ediliyor';
+            stokColorHepsiSonyGenel = Colors.orange;
+            _stockAmazon = 'Kontrol Ediliyor';
+            stokColorAmazon = Colors.orange;
 
             _checkStock();
-            _checkStockXbox();
+            // _checkStockXbox();
             _checkStockPSVatan();
             _checkStockPSMediaMarkt();
-            _checkStockDualsenseVatanSiyah();
-            _checkStockDualsenseMediaMarktKirmizi();
+            // _checkStockDualsenseVatanSiyah();
+            // _checkStockDualsenseMediaMarktKirmizi();
             _checkStockpsDigitalMediaMarkt();
-            _checkStockdualsenseVatanBeyaz();
-            _checkStockdualsenseVatanPembe();
-            _checkStockdualsenseVatanMavi();
-            _checkStockdualsenseVatanMor();
-            _checkStockdualsenseVatanKirmizi();
-            _checkStockdualsenseVatanSarj();
+            // _checkStockdualsenseVatanBeyaz();
+            // _checkStockdualsenseVatanPembe();
+            // _checkStockdualsenseVatanMavi();
+            // _checkStockdualsenseVatanMor();
+            // _checkStockdualsenseVatanKirmizi();
+            // _checkStockdualsenseVatanSarj();
             _checkStockPSGenelOverGame();
+            _checkStockPSGenelHepsiburada();
+            _checkStokTeknosaFiyatGenel();
+            _checkStokHepsiSonyGenel();
+            _checkStokAmazon();
 
             _date = DateTime.now().toString();
 

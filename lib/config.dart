@@ -23,6 +23,10 @@ Color stockColordualsenseVatanMor = Colors.orange;
 Color stockColordualsenseVatanKirmizi = Colors.orange;
 Color stockColorDualsenseSarjVatan = Colors.orange;
 Color stockColorpsGenelOverGame = Colors.orange;
+Color stokColorHepsiburadaFiyatGenel = Colors.orange;
+Color stokColorTeknosaFiyatGenel = Colors.orange;
+Color stokColorHepsiSonyGenel = Colors.orange;
+Color stokColorAmazon = Colors.orange;
 
 String vatanCDBundle =
     'https://www.vatanbilgisayar.com/sony-playstation-5-oyun-konsolu-ve-hfw-oyunu.html';
