@@ -106,9 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     } else {
       setState(() {
-        _stock = 'Yeniden Deneyin';
+        _stock = 'Error';
         stockColor = Colors.orange;
-        toplamStok++;
       });
     }
   }
@@ -575,14 +574,14 @@ class _MyHomePageState extends State<MyHomePage> {
       //price to int
       var priceInt = int.parse(price);
 
-      if (priceInt > 16000) {
+      if (priceInt > 15000) {
         setState(() {
-          _stockAmazon = 'Stok yok';
+          _stockAmazon = '15.000₺ üzerinde';
           stokColorAmazon = Colors.red;
         });
       } else {
         setState(() {
-          _stockAmazon = 'Stokta olabilir !';
+          _stockAmazon = '15.000₺ altında Stokta olabilir !';
           stokColorAmazon = Colors.green;
           toplamStok++;
           Vibration.vibrate(duration: 100, amplitude: 128);
